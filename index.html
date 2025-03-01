@@ -6,6 +6,46 @@
     <title>Unity WebGL Player | Slot-Simulator</title>
     <script src="Build/UnityLoader.js"></script>
     <script>
+      // Listen for messages from the parent page
+window.addEventListener('message', function(event) {
+  // Verify the message source if needed
+  // if (event.origin !== "https://your-parent-domain.com") return;
+  
+  const message = event.data;
+  
+  // Check if this is our message and perform the requested action
+  if (message && message.source === 'parent_page') {
+    if (message.action === 'tab') {
+      // Simulate Tab key
+      const tabEvent = new KeyboardEvent('keydown', {
+        key: 'Tab',
+        code: 'Tab',
+        keyCode: 9,
+        which: 9,
+        bubbles: true,
+        cancelable: true
+      });
+      document.activeElement.dispatchEvent(tabEvent);
+      console.log('Tab key simulated in iframe');
+    } 
+    else if (message.action === 'end') {
+      // Simulate End key
+      const endEvent = new KeyboardEvent('keydown', {
+        key: 'End',
+        code: 'End',
+        keyCode: 35,
+        which: 35,
+        bubbles: true,
+        cancelable: true
+      });
+      document.activeElement.dispatchEvent(endEvent);
+      console.log('End key simulated in iframe');
+    }
+  }
+});
+    </script>
+    
+    <script>
       var gameInstance = UnityLoader.instantiate("gameContainer", "Build/40-1.json");
     </script>
   </head>
